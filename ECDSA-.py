@@ -1,6 +1,5 @@
-from cryptography.hazmat.primitives.asymmetric import ec
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.backends import default_backend
+from lab1 import generate_keypair, hash_message, sign_message, verify_signature
+
 
 # Вибір еліптичної кривої та параметрів
 curve = ec.SECP256R1()
