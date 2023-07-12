@@ -2,31 +2,34 @@
 
 Ця програма демонструє використання алгоритму цифрового підпису на основі еліптичних кривих (ECDSA).
 
-# Вимоги до встановлення
+Імпортувати модуль lab1, де знаходяться функції-обгортки:
+from my_wrappers import *
 
-Для коректної роботи програми потрібно встановити наступні залежності:
+Для генерації пари ключів, викличте функцію generate_keypair():
+private_key, public_key = generate_keypair()
 
-- `cryptography`: `pip install cryptography`
+Для гешування повідомлення, викличте функцію hash_message():
+hashed_message = hash_message(message)
 
-# Інструкції з використання
+Для підпису повідомлення приватним ключем, викличте функцію sign_message():
+signature = sign_message(private_key, message)
 
-1. Завантажте або склонуйте репозиторій з програмою.
-2. Запустіть програму, виконавши команду `python ECDSA-.py`.
-3. У вікні програми виберіть одну з опцій:
-   - "1. Підписати повідомлення" - введіть повідомлення для підпису, підпис буде згенеровано та виведено на екран.
-   - "2. Перевірити підпис" - введіть повідомлення та підпис для перевірки, буде виведено результат перевірки підпису.
-   - "3. Вийти" - завершити виконання програми.
-4. Дотримуйтеся інструкцій, що виводяться на екрані.
+Для перевірки цифрового підпису відкритим ключем, викличте функцію verify_signature():
+valid = verify_signature(public_key, message, signature)
 
-# Підписання повідомлення
+Для серіалізації та десеріалізації ключів та підпису, використовуйте відповідні функції:
+serialized_private_key = serialize_private_key(private_key)
+deserialized_private_key = deserialize_private_key(curve, serialized_private_key)
 
-1. Оберіть опцію "1. Підписати повідомлення".
-2. Введіть повідомлення: Hello, world!
-3. Підпис: 304402207e3e1f9687356a860cdfd21fbbf09f9ab38d7f1b2c091b3158a8f4e716bba92b0220145b607f1ea51b3094c3b5e75553a9c3051d6f07c62de3e9f0b6c8c15f3459b7
+serialized_public_key = serialize_public_key(public_key)
+deserialized_public_key = deserialize_public_key(curve, serialized_public_key)
 
-# Перевірка підпису
+serialized_signature = serialize_signature(signature)
+deserialized_signature = deserialize_signature(serialized_signature)
 
-1. Оберіть опцію "2. Перевірити підпис".
-2. Введіть повідомлення: Hello, world!
-3. Введіть підпис: 304402207e3e1f9687356a860cdfd21fbbf09f9ab38d7f1b2c091b3158a8f4e716bba92b0220145b607f1ea51b3094c3b5e75553a9c3051d6f07c62de3e9f0b6c8c15f3459b7
-4. Результат: Підпис є дійсним
+І в кінці виведення результатів.
+print("Private Key:", private_key.private_numbers().private_value)
+print("Public Key:", public_key.public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo))
+print("Hashed Message:", hashed_message)
+print("Signature:", signature)
+print("Valid Signature:", valid)
