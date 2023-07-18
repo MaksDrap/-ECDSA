@@ -1,35 +1,26 @@
-# ECDSA (Еліптична крива цифрового підпису)
+Опис програми:
+Даний код демонструє використання цифрового підпису ECDSA (Elliptic Curve Digital Signature Algorithm) на еліптичних кривих для підписування та перевірки повідомлень. Використовується власна реалізація алгоритму цифрового підпису (MyECDSA) на основі бібліотеки cryptography та Crypto.PublicKey.
 
-Ця програма демонструє використання алгоритму цифрового підпису на основі еліптичних кривих (ECDSA).
+Функція sign_and_verify_message отримує повідомлення як вхідні дані, генерує пару ключів, підписує повідомлення приватним ключем, перевіряє підпис за допомогою публічного ключа та повертає підпис та статус валідності.
 
-Імпортувати модуль lab1, де знаходяться функції-обгортки:
-from my_wrappers import *
+У головній частині програми користувачу пропонується ввести повідомлення, яке потрібно підписати. Після цього програма підписує повідомлення, виводить отриманий підпис, а також перевіряє його валідність і виводить відповідне повідомлення.
 
-Для генерації пари ключів, викличте функцію generate_keypair():
-private_key, public_key = generate_keypair()
+Деталі використаних залежностей:
 
-Для гешування повідомлення, викличте функцію hash_message():
-hashed_message = hash_message(message)
+lab1 містить реалізацію обгортки до бібліотечних функцій
+cryptography.hazmat.primitives використовується для генерації ключів, підпису та перевірки підпису.
+Crypto.PublicKey використовується для серіалізації та десеріалізації ключів.
+Інструкції з запуску:
 
-Для підпису повідомлення приватним ключем, викличте функцію sign_message():
-signature = sign_message(private_key, message)
+Переконайтеся, що у вас встановлені бібліотеки cryptography та pycryptodome. Якщо ні, встановіть їх за допомогою pip:
+pip install cryptography pycryptodome
 
-Для перевірки цифрового підпису відкритим ключем, викличте функцію verify_signature():
-valid = verify_signature(public_key, message, signature)
+Скопіюйте код програми в окремий файл з розширенням .py, наприклад, main.py.
+Запустіть файл програми за допомогою команди:
+python main.py
 
-Для серіалізації та десеріалізації ключів та підпису, використовуйте відповідні функції:
-serialized_private_key = serialize_private_key(private_key)
-deserialized_private_key = deserialize_private_key(curve, serialized_private_key)
-
-serialized_public_key = serialize_public_key(public_key)
-deserialized_public_key = deserialize_public_key(curve, serialized_public_key)
-
-serialized_signature = serialize_signature(signature)
-deserialized_signature = deserialize_signature(serialized_signature)
-
-І в кінці виведення результатів.
-print("Private Key:", private_key.private_numbers().private_value)
-print("Public Key:", public_key.public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo))
-print("Hashed Message:", hashed_message)
-print("Signature:", signature)
-print("Valid Signature:", valid)
+Слідуйте вказівкам на екрані для введення повідомлення.
+Приклад результатів роботи програми:
+Введіть повідомлення для підписування: 123
+Signature: b'0F\x02!\x00\x84\xec\xf9\xdd\xc6"\xe2\x95/\xbb[\x88\xee\x1eg\x91\x8a#Z\xb6\xfeF\xd4=\xb0\xf0VF\xb5\xd5\xb6\x81\x02!\x00\xefX\xddzt\xddI+\x9f\x03\xefi\x00\xd5}\xfd\x89ZZ\xb1\xb8\xca\xe7t\x84\xbc\t@t\x1e\x8e\xdd'
+Підпис перевірено: Повідомлення є валідним.
